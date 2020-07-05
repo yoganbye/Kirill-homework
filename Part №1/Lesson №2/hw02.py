@@ -54,11 +54,11 @@ else:
 # Через цикл while:
 
 number = int(input())
-lenght = len(str(number))   # т.к. строка итерируемй тип
+lenght = len(str(number))  
 count = 0
 tmp = 0
 while count < lenght:
-    if int(str(number)[count]) > tmp:
+    if int(str(number)[count]) > tmp:  # т.к. строка итерируемй тип
         tmp = int(str(number)[count])        
     count += 1
 print(tmp)
@@ -66,9 +66,8 @@ print(tmp)
 # Через цикл for:
 
 number = int(input())
-lenght = len(str(number))   # т.к. строка итерируемй тип
 tmp = 0
-for i in str(number):
+for i in str(number):  # т.к. строка итерируемый тип
     if int(i) > tmp:
         tmp = int(i) 
 print(tmp)
