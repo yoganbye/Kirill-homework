@@ -25,6 +25,21 @@ else:
 # qwerty (или любая другая строка)
 # Я не понимаю, что вы от меня хотите...
 
+ask = input('Четные или нечетные: ')
+
+if 'четные' == ask or 'Четные' == ask:
+    for i in range(21):
+       if i % 2 == 0:
+           print(i)
+elif 'нечетные' == ask or 'Нечетные' == ask:
+    count = 0
+    while count < 21:
+        if count % 2 != 0:
+            print(count)
+        count += 1
+else:
+    print('Я не понимаю, что вы от меня хотите...')
+
 
 # Задача-3: Дано произвольное целое число, вывести самую большую цифру этого числа.
 # Например, дается x = 58375.
@@ -34,3 +49,26 @@ else:
 # Подсказки:
 # * постарайтесь решить задачу с применением арифметики и цикла while;
 # * при желании и понимании решите задачу с применением цикла for.
+
+
+# Через цикл while:
+
+number = int(input())
+lenght = len(str(number))   # т.к. строка итерируемй тип
+count = 0
+tmp = 0
+while count < lenght:
+    if int(str(number)[count]) > tmp:
+        tmp = int(str(number)[count])        
+    count += 1
+print(tmp)
+
+# Через цикл for:
+
+number = int(input())
+lenght = len(str(number))   # т.к. строка итерируемй тип
+tmp = 0
+for i in str(number):
+    if int(i) > tmp:
+        tmp = int(i) 
+print(tmp)
