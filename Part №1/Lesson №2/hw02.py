@@ -53,7 +53,7 @@ else:
 
 # Через цикл while:
 
-number = int(input())
+number = int(input('Введите число: '))
 lenght = len(str(number))  
 count = 0
 tmp = 0
@@ -65,7 +65,7 @@ print(tmp)
 
 # Через цикл for:
 
-number = int(input())
+number = int(input('Введите число: '))
 tmp = 0
 for i in str(number):  # т.к. строка итерируемый тип
     if int(i) > tmp:
