@@ -28,48 +28,32 @@
 # Вход: 11
 # Выход: 5 3
 
-your_flat = int(input('Введите номер комнаты: '))
- 
-block = 0
-last_flat_in_block = 0
-last_floor_in_block = 0
- 
-while your_flat > last_flat_in_block:
-    block += 1
-    last_flat_in_block += block * block
-    last_floor_in_block += block
- 
-i = 0
-while last_flat_in_block > your_flat:
-    last_flat_in_block -= 1
- 
-    if i < block - 1:
-        i += 1
-    else:
-        last_floor_in_block -= 1
-        i = 0
- 
-flat_position = block - i
- 
-print('Ваш этаж:', last_floor_in_block)
-print('Ваша комната {}-ая слева'.format(flat_position))
- 
- 
- 
-# Вариант 2
 flat = int(input('Введите номер квартиры: '))
  
-i = 1
-t = 0
+i = 1 #квадрант
+t = 0 #этаж
  
-while flat > i * i:
+while flat > i * i:     #цикл для определения этажа; +1 этаж в принте
     flat = flat - i * i
     t += i
     i += 1
+
+print(t)
+print(i)
  
-while flat > i:
+while flat > i:        # цикл для определения комнаты слева и уточнения этажа
     flat -= i
     t += 1
+
+print()
+print(t)
+print(i)
+print(flat)
  
 print('Этаж', t + 1)
 print('Квартира слева', flat)
+
+
+
+
+

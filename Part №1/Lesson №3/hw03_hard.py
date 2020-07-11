@@ -71,3 +71,28 @@ else:
 #
 # Вход: 11
 # Выход: 5 3
+
+flat = int(input('Введите номер квартиры: '))
+ 
+i = 1 #квадрант
+t = 0 #этаж
+ 
+while flat > i * i:     #цикл для определения этажа; +1 этаж в принте
+    flat = flat - i * i
+    t += i
+    i += 1
+
+print(t)
+print(i)
+ 
+while flat > i:        # цикл для определения комнаты слева и уточнения этажа
+    flat -= i
+    t += 1
+
+print()
+print(t)
+print(i)
+print(flat)
+ 
+print('Этаж', t + 1)
+print('Квартира слева', flat)

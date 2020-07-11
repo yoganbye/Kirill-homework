@@ -81,7 +81,8 @@ print(st2)
 
 # а) вариант 2
 
-new_list = set(str1)
+str4 = []
+new_list = set(str4)
 print(new_list)
 
 # б)
