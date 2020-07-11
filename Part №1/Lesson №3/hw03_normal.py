@@ -79,6 +79,11 @@ for i in st1:
         st2.append(i)
 print(st2)
 
+# а) вариант 2
+
+new_list = set(str1)
+print(new_list)
+
 # б)
 st3 = []
 

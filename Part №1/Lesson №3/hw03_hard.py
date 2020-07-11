@@ -4,6 +4,11 @@
 equation = 'y = -12x + 11111140.2121'
 x = 2.5
 # вычислите и выведите y
+var = equation.split(' ')
+coeff_k = var[2]
+var[2] = coeff_k[:-1]
+y = float(var[2]) * x + float(var[4])
+print(y)
 
 
 # Задание-2: Дата задана в виде строки формата 'dd.mm.yyyy'.
@@ -24,6 +29,18 @@ date = '01.22.1001'
 date = '1.12.1001'
 date = '-2.10.3001'
 
+date_list = date.split('.')
+
+if len(date_list[0]) != 2 or len(date_list[1]) != 2 or len(date_list[2]) != 4:
+    print('дата введена не корректно')
+elif not 31 >= int(date_list[0]) >= 1:
+    print('день введен не корректно')
+elif not 12 >= int(date_list[1]) >= 1:
+    print('месяц введен не корректно')
+elif not 9999 >= int(date_list[2]) >= 1:
+    print('год введен не корректно')
+else:
+    print('дата введена корректно')
 
 # Задание-3: "Перевёрнутая башня" (Задача олимпиадного уровня)
 #
