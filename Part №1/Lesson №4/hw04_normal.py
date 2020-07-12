@@ -5,6 +5,7 @@
 def fibonacci(n, m):
     pass
 
+
 # Задача-2:
 # Напишите функцию, сортирующую принимаемый список по возрастанию.
 # Для сортировки используйте любой алгоритм (например пузырьковый).
@@ -12,9 +13,17 @@ def fibonacci(n, m):
 
 
 def sort_to_max(origin_list):
-    pass
+    last_item = len(origin_list) - 1
+    for i in range(last_item): #количество элементов в массиве
+        for j in range(last_item - i): #cравнение и изменение эл в массиве; -i - уберает сравнение с последним эл
+            #print(origin_list)
+            if origin_list[j] > origin_list[j+1]:
+                origin_list[j], origin_list[j+1] = origin_list[j+1], origin_list[j]
+    print(origin_list)
 
 sort_to_max([2, 10, -12, 2.5, 20, -11, 4, 4, 0])
+
+
 
 # Задача-3:
 # Напишите собственную реализацию стандартной функции filter.
