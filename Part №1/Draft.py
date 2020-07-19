@@ -1,43 +1,46 @@
-# Задача-4:
-# Даны четыре точки А1(х1, у1), А2(x2 ,у2), А3(x3 , у3), А4(х4, у4).
-# Определить, будут ли они вершинами параллелограмма.
+# Задание-3:
+# Напишите скрипт, заполняющий указанный файл (самостоятельно задайте имя файла)
+# произвольными целыми цифрами, в результате в файле должно быть
+# 2500-значное произвольное число.
+# Найдите и выведите самую длинную последовательность одинаковых цифр
+# в вышезаполненном файле.
 
-a1 = []
-a2 = []
-a3 = []
-a4 = []
-a = [a1, a2, a3, a4]
+from random import randint
+import re
 
-a1.append(input('Введите x1: '))
-a1.append(input('Введите y1: '))
-a2.append(input('Введите x2: '))
-a2.append(input('Введите y2: '))
-a3.append(input('Введите x3: '))
-a3.append(input('Введите y3: '))
-a4.append(input('Введите x4: '))
-a4.append(input('Введите y4: '))
+try:
+    file = open('Part №1\Lesson №5\work3.txt', 'w+')
 
-# начало части кода, которая ищет все возможные длины отрезков
-import math
-def vector_len(a1, a2):
-    vectorlen = math.sqrt((int(a1[0]) - int(a2[0])) ** 2 + (int(a1[1]) - int(a2[1])) ** 2)
-    return vectorlen
+    try:
+        for i in range(2500):
+            file.write(str(randint(0, 9)))
 
-l = [] #длины отрезков
+        file.seek(0)
 
-for i in range(len(a)):
-    for j in range(i+1, len(a)):
-        l.append(round(vector_len(a[i], a[j]), 2))
-
-# конец части кода, которая ищет все возможные длины отрезков
+        a = file.read()
+        
+        print(a)
+        print()
+        
+        tmp = ''
+        maximum = ''
+        for i in range(len(a) - 1):
+            if len(tmp) == 0 and (a[i] == a[i+1] or a[i] == a[i-1]):
+                tmp += a[i]
+            elif (a[i] == a[i+1] or a[i] == a[i-1]) and a[i] in tmp:
+                tmp += a[i]
+            elif len(tmp) > len(maximum):
+                maximum = tmp
+                tmp = ''
+            else:
+                tmp = ''
     
-print('Длины всех возможных сторон, при условии что не известен порядок обхода:', l, sep = '\n') 
+        print(maximum)
 
-for i in l:
-    if l.count(i) > i:
-        print('Это параллелограм')
-        break
-    else:
-        print('Это не параллелограм')
-        break
+    finally:
+        file.close()
+
+except FileNotFoundError:
+    print('Не возможно прочесть')
+
 
