@@ -46,11 +46,35 @@ try:
 except ValueError:
     print('Введите число корректно')
 
-import os, hw06_easy
+import os, hw06_easy, sys
 
 def change_dir(path):
-    
-    os.chdir(path)
+    #Функция смены дирректории
+    try:
+        path_name = input('Ввидите имя папки: ')
+        os.chdir(os.path.join(os.getcwd(), path_name))
+    except Exception:
+        print('Такой папки нет')
+
+    print(os.getcwd())
+
+def del_dir():
+    try:
+        from os import rmdir
+        name_dir = input('Введите имя папки на удаление: ')
+        os.rmdir(name_dir)
+
+    except FileNotFoundError:
+        print('Не удается найти файлы')
+
+def create_dir():
+    try:
+        name_dir = input ('Введите имя создаваемой папки: ')
+        os.mkdir(name_dir)
+
+    except FileExistsError:
+        print('Невозможно создать фалы, т.к. они существуют')
+
 
 if call == 1:
     try:
@@ -59,4 +83,14 @@ if call == 1:
         print("Не удается найти указанный файл")
     
 elif call == 2:
+    #импорт функции просмотра содержимого
     hw06_easy.view_content_dir()
+
+elif call == 3:
+    del_dir()
+
+elif call == 4:
+    create_dir()
+
+else:
+    print('Выбрано не корректное действие')

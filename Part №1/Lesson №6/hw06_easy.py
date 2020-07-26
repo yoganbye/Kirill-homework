@@ -41,7 +41,7 @@ def view_content_dir():
     функция отображает папки текущей директории
     '''
     import os
-    path = os.listdir()
+    path = os.listdir(os.getcwd())
     print(path)
 
 
@@ -52,12 +52,8 @@ def copy_file():
     '''
     функция создает копию текущего файла
     '''
-    import os, inspect
+    import os, sys
     
-    path = inspect.getframeinfo(inspect.currentframe()).filename
+    path = os.path.join(os.getcwd(), sys.argv[0])
     with open(f'{path}_copy', 'w', encoding='utf-8') as file:
         pass
-
-#filename = inspect.getframeinfo(inspect.currentframe()).filename
-#path     = os.path.dirname(os.path.abspath(filename))
-
