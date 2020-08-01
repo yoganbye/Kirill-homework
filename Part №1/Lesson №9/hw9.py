@@ -13,45 +13,53 @@
 # Реализовать возможность опциональной передачи атрибутов для тегов, т. е атрибуты могут быть 
 # (src для image, href для a и. т. д.) , а могут и не быть.
 
-from __future__ import annotations
 from abc import ABC, abstractmethod
 
 
 class FactoryTag(ABC):
-    def get_tag(self):
+    def get_tag(self=''):
         return('<tag></tag>')
 
-class ImageFactory(FactoryTag):
-    def get_tag(self):
+
+class Tag(FactoryTag):
+    def get_tag(self, name=''):
+        if name == 'image':
+            return ImageFactory.get_tag()
+        elif name == 'input':
+            return InputFactory.get_tag()
+        elif name == 'p':
+            return TextFactory.get_tag()
+        elif name == 'a':
+            return LinkFactory.get_tag()
+        else:
+            return FactoryTag.get_tag()
+    
+
+class ImageFactory(Tag):    
+    def get_tag(self=''):
         return ('<img>')
 
 
-class InputFactory(FactoryTag):
-    def get_tag(self):
+class InputFactory(Tag):
+    def get_tag(self=''):
         return ('<input></input>')
 
 
-class TextFactory(FactoryTag):
-    def get_tag(self):
+class TextFactory(Tag):
+    def get_tag(self=''):
         return ('<p></p>')
 
 
-class LinkFactory(FactoryTag):
-    def get_tag(self):
+class LinkFactory(Tag):
+    def get_tag(self=''):
         return ('<a></a>')
 
 
-def create_tag(name):
-    if name == 'img':
-        return ImageFactory.get_tag()
-    elif name == 'input':
-        return InputFactory.get_tag()
-    elif name == 'p':
-        return TextFactory.get_tag()
-    elif name == 'a':
-        return LinkFactory.get_tag()
-
-player = create_tag('img')
+if __name__ == '__main__':
+    player = Tag()
+    elements = ['image', 'p', '', 'a', 'input']
+    for i in elements:
+        print(player.get_tag(i))
 
 
 
