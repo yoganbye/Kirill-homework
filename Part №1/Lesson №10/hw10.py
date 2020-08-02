@@ -14,6 +14,7 @@ class EnterpriseFactory(ABC):
 
 class Enterprise(EnterpriseFactory):
     count_work = 0
+
     def __init__(self, name):
         self._name = name
 
@@ -22,7 +23,11 @@ class Enterprise(EnterpriseFactory):
             return (f'{self._name} уже выполняет работу')
         else:
             Enterprise.count_work += 1
-            return (f'Отправить работягу {self._name} в шахту')
+            self._work = input(f'{self._name} нигде не работает. Назначте работу: ')
+            return (f'Вы отправили работягу {self._name} {self._work}')
+
+    def info_work(self):
+        return(f'{self._name} работает {self._work}')
 
 
 class People(Enterprise):
@@ -73,5 +78,7 @@ footman = Employees('Валерий', 'Жмышенко', "Альбертови�
 print(footman.get_info)
 print()
 print(footman.assign_work())
+print()
+print(footman.info_work())
 print()
 print(footman.assign_work())
