@@ -1,17 +1,27 @@
 import socket
-import time
 
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Создает сокет TCP
-server_socket.bind(('', 8888))  # Присваивает порт 8888
-server_socket.listen(1)  # Переходит в режим ожидания запросов;
-# одновременно обслуживает не более
-# 5 запросов.
+
+clients = []
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server_socket.bind(('localhost', 9090))
+
+print('Start server')
 
 while True:
-   client_socket, addr = server_socket.accept()  # Принять запрос на соединение
-   print("Получен запрос на соединение от %s" % str(addr))
-   timestr = time.ctime(time.time()) + "\n"
-   client_socket.send(timestr.encode('ascii'))
-   client_socket.close()
+      data, addres = server_socket.recvfrom(1024)
+
+      if addres not in clients:
+         clients.append(addres)
+
+      print(addres[0], addres[1], data.decode('utf-8'))
+
+      for client in clients:
+         if addres != client:
+            server_socket.sendto(data, client)
+
+server_socket.close()
+
+ 
+
 
 
