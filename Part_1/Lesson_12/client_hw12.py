@@ -4,7 +4,7 @@ import json
 import time
 from log_config import *
 
-@log
+# @log
 def json_convert(name, message, time):    
     base = {'name' : name,
     'message' : message,
