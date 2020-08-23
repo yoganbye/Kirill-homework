@@ -57,6 +57,7 @@ class Student(Person, Class_room):
         return f'Mother: {self._mother}, Father: {self._father}'        
     
         
+        
 classes = [Class_room("5A", "Математика", "Карпов Анатолий Михайлович"),
            Class_room("6A", "Физика", "Бондарева Мила Степановна")]
  

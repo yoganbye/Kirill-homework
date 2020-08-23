@@ -2,9 +2,9 @@ import socket
 import threading
 import json
 import time
-from log_config import *
+from log_config import log
 
-# @log
+@log
 def json_convert(name, message, time):    
     base = {'name' : name,
     'message' : message,
@@ -27,10 +27,10 @@ def get_message(sock, name):
         message = input('[You]: ')
         timest = time.strftime('%Y-%m-%d-%H.%M.%S', time.localtime())
 
-        born_json = json_convert(name,message, timest)
+        born_json = json_convert(name, message, timest)
 
         if message != "":
-            sock.sendto((born_json).encode('utf-8'), server)
+            sock.sendto(born_json.encode('utf-8'), server)
         
 server = ('localhost', 9090)
 
