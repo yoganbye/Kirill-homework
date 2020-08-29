@@ -42,6 +42,24 @@ number = """
 05886116467109405077541002256983155200055935729725
 71636269561882670428252483600823257530420752963450"""
 
+number = ''.join(number.split())
+
+def multiplication(b, a):
+    res = 1
+    while b <= a:
+        res *= int(number[b])
+        b += 1
+    return res
+
+def max_num(n):
+
+    result = []
+    for i in range(0, len(number)-(n-1)):
+        result.append(multiplication(i, i+(n-1)))
+    return result
+
+print(max(max_num(5)))
+
 
 # Задание-3 (Ферзи):
 # Известно, что на доске 8×8 можно расставить 8 ферзей так, чтобы они не били
@@ -50,3 +68,30 @@ number = """
 # Программа получает на вход восемь пар чисел,
 # каждое число от 1 до 8 — координаты 8 ферзей.
 # Если ферзи не бьют друг друга, выведите слово NO, иначе выведите YES.
+
+import random
+
+
+def ferzi():
+    n = 8
+    x = []
+    y = []
+    for i in range(n):
+        new_x = random.randint(1, 8)   
+        new_y = random.randint(1, 8)    
+        x.append(new_x)
+        y.append(new_y)
+    
+    correct = True
+    for i in range(n):
+        for j in range(i + 1, n):
+            if x[i] - x[j] == y[i] -y[j]:
+                correct = False
+    
+    if correct:
+        print('NO')
+    else:
+        print('YES')
+
+if __name__ == "__main__":
+    ferzi()
