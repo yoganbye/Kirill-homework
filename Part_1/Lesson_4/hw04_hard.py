@@ -96,6 +96,65 @@ else:
 # то их ЗП уменьшается пропорционально, а за заждый час переработки
 # они получают удвоенную ЗП, пропорциональную норме.
 # Кол-во часов, которые были отработаны, указаны в файле "data/hours_of"
+class Worker:
+    def __init__(self, name, surname, money, norm_hour, real_hour, rang):
+        self.name = name
+        self.surname = surname
+        self.money = int(money)
+        self.norm_hour = int(norm_hour)
+        self.real_hour = int(real_hour)
+        self.rang = rang
+
+    @staticmethod
+    def read_file():
+        with open('Part_1\Lesson_7\data\data\workers', 'r+', encoding='utf-8') as file:
+            list_norm = file.read().split('\n')
+
+        with open('Part_1\Lesson_7\data\data\hours_of', 'r+', encoding='utf-8') as file1:
+            list_real = file1.read().split('\n')
+        return list_norm, list_real
+
+    @classmethod
+    def info_to_worker(cls):
+        list_norm, list_real = Worker.read_file()
+        Worker.title()
+        for i in list_norm[1:]:
+            name, surname, money, rang, norm_hour = i.split()
+            for j in list_real[1:]:
+                name_j, surname_j, real_hour = j.split()
+                if surname == surname_j:
+                    footman = cls(name, surname, money, norm_hour, real_hour, rang)
+                    footman.calculation
+                    footman.write_file
+        return footman   
+
+    @property
+    def calculation(self):
+        if self.norm_hour > self.real_hour:
+            result_money = self.money / self.norm_hour * self.real_hour
+        else:
+            result_money = self.money + (self.money / self.norm_hour * self.real_hour - self.norm_hour) * 2
+        self.result_money = round(result_money)
+        return self.result_money
+
+    @property
+    def write_file(self):
+        with open('data_worker_of_price.txt', 'a+', encoding='utf-8') as out:
+            out.write('{}{}{}{}\n'.format(self.name.ljust(15), self.surname.ljust(15),\
+                                         self.rang.ljust(20), self.result_money))
+
+    @staticmethod
+    def title():
+        with open('data_worker_of_price.txt', 'a+', encoding='utf-8') as out:                
+            out.write('{}{}{}{}\n'.format('Имя'.ljust(15), 'Фамилия'.ljust(15),\
+                                        'Должность'.ljust(20), 'Зарплата к выдаче'))
+
+
+
+if __name__ == "__main__":
+    worker1 = Worker.info_to_worker()
+
+
 
 
 # Задание-3:
@@ -110,3 +169,16 @@ else:
 # Подсказка:
 # Чтобы получить список больших букв русского алфавита:
 # print(list(map(chr, range(ord('А'), ord('Я')+1))))
+
+
+dikt_fruts = dict()
+with open('Part_1\Lesson_4\data\fruits.txt',encoding='utf-8') as inp_ut:
+    for fruits in inp_ut.readlines():
+        file_name = 'fruits_{}'.format(fruits[0].upper())
+        dikt_fruts[file_name] = dikt_fruts.get(file_name,'')+fruits
+    
+for i in dikt_fruts:
+    name = '{}.txt'.format(i)
+    with open(name,'w') as out:
+        out.write(dikt_fruts[i])
+print('Формирование файлов по именам фруктов закончено!')
