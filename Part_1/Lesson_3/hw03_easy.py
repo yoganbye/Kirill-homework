@@ -15,7 +15,7 @@ fruit = ["яблоко", "банан", "киви", "арбуз"]
 n = len(fruit)
 
 for i in range(n):
-    print('{}. {}'.format(i+1, fruit[i]))
+    print('{}. {:>6}'.format(i+1, fruit[i]))
 
 # Подсказка: воспользоваться методом .format()
 

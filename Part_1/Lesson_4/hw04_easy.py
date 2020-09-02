@@ -20,24 +20,19 @@ def my_round(number, ndigits):
     fraction = number % 1 * 10 ** ndigits  #отделили остаток    
     balance = float(fraction) - int(fraction) #отделили число после остатка    
     if balance >= 0.5:  #если число после остатка больше 0.5
-        return integer + (int(fraction) + 1) / 10 ** ndigits #сложили целую часть и остаток к остатку +1 
+        var = integer + (int(fraction) + 1) / 10 ** ndigits #сложили целую часть и остаток к остатку +1 
+        var = '{:.5f}'.format(var)   
+        return var
     else: #если остаток меньше 0.5
-        return integer + int(fraction) / 10 ** ndigits #сложили целую часть и остаток
+        var = integer + int(fraction) / 10 ** ndigits #сложили целую часть и остаток
+        var = '{:.5f}'.format(var)   
+        return var
+    
 
 print(my_round(2.1234567, 5))
 print(my_round(2.1999967, 5))
 print(my_round(2.9999967, 5))
 
-'''
-Дробная часть вещественного числа равна остатку от его деления на единицу. 
-Целая часть соответственно равна разности самого числа и его дробной части.
-Чтобы сохранить определенное количество разрядов после запятой число следует сначала 
-сдвинуть влево на соответствующее число разрядов, взять его целую часть и сдвинуть обратно 
-в право на столько же разрядов. Сдвиг влево/вправо реализуется умножением/делением на 
-основание системы счисления, возведенное в степень равную количеству сдвигаемых разрядов.
-
-Да, это жестко...
-'''
 
 
 # Задание-3:
@@ -51,12 +46,18 @@ def lucky_ticket(ticket_number):
     ticket_list = []
     for i in str(ticket_number):
         ticket_list.append(i)    
-    sum1 = int(ticket_list[0]) + int(ticket_list[1])
-    leng = len(ticket_list)
-    sum2 = int(ticket_list[leng-1]) + int(ticket_list[leng-2])
-    return sum1 == sum2
-        
+    len_face = len(ticket_list) // 2
 
+    sum1 = 0
+    sum2 = 0
+    count = 0
+    while count < len_face:
+        sum1 += int(ticket_list[count])        
+        count +=1     
+        sum2 += int(ticket_list[-count]) 
+    
+    return sum1 == sum2
+  
 
 print(lucky_ticket(123006))
 print(lucky_ticket(12321))

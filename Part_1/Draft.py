@@ -1,34 +1,28 @@
-# Задание-3 (Ферзи):
-# Известно, что на доске 8×8 можно расставить 8 ферзей так, чтобы они не били
-# друг друга. Вам дана расстановка 8 ферзей на доске.
-# Определите, есть ли среди них пара бьющих друг друга.
-# Программа получает на вход восемь пар чисел,
-# каждое число от 1 до 8 — координаты 8 ферзей.
-# Если ферзи не бьют друг друга, выведите слово NO, иначе выведите YES.
+# Задание-3:
+# Дан шестизначный номер билета. Определить, является ли билет счастливым.
+# Решение реализовать в виде функции.
+# Билет считается счастливым, если сумма его первых и последних цифр равны.
+# !!!P.S.: функция не должна НИЧЕГО print'ить, должна возвращать либо True,
+# ибо False (если счастливый и несчастливый соответственно)
 
-import random
+def lucky_ticket(ticket_number):
+    ticket_list = []
+    for i in str(ticket_number):
+        ticket_list.append(i)    
+    len_face = len(ticket_list) // 2
 
-
-def ferzi():
-    n = 8
-    x = []
-    y = []
-    for i in range(n):
-        new_x = random.randint(1, 8)   
-        new_y = random.randint(1, 8)    
-        x.append(new_x)
-        y.append(new_y)
+    sum1 = 0
+    sum2 = 0
+    count = 0
+    while count < len_face:
+        sum1 += int(ticket_list[count])        
+        count +=1     
+        sum2 += int(ticket_list[-count]) 
     
-    correct = True
-    for i in range(n):
-        for j in range(i + 1, n):
-            if x[i] - x[j] == y[i] -y[j]:
-                correct = False
-    
-    if correct:
-        print('NO')
-    else:
-        print('YES')
+    return sum1 == sum2
+  
 
-if __name__ == "__main__":
-    ferzi()
+print(lucky_ticket(123006))
+print(lucky_ticket(12321))
+print(lucky_ticket(436751))
+
