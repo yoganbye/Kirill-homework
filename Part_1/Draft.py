@@ -1,28 +1,36 @@
 # Задание-3:
-# Дан шестизначный номер билета. Определить, является ли билет счастливым.
-# Решение реализовать в виде функции.
-# Билет считается счастливым, если сумма его первых и последних цифр равны.
-# !!!P.S.: функция не должна НИЧЕГО print'ить, должна возвращать либо True,
-# ибо False (если счастливый и несчастливый соответственно)
+# Дан файл ("data/fruits") со списком фруктов.
+# Записать в новые файлы все фрукты, начинающиеся с определенной буквы.
+# Т.е. в одном файле будут все фрукты на букву “А”, во втором на “Б” и т.д.
+# Файлы назвать соответственно.
+# Пример имен файлов: fruits_А, fruits_Б, fruits_В ….
+# Важно! Обратите внимание, что нет фруктов, начинающихся с некоторых букв.
+# Напишите универсальный код, который будет работать с любым списком фруктов
+# и распределять по файлам в зависимости от первых букв, имеющихся в списке фруктов.
+# Подсказка:
+# Чтобы получить список больших букв русского алфавита:
+# print(list(map(chr, range(ord('А'), ord('Я')+1))))
 
-def lucky_ticket(ticket_number):
-    ticket_list = []
-    for i in str(ticket_number):
-        ticket_list.append(i)    
-    len_face = len(ticket_list) // 2
+import os
+import json
+import pickle
 
-    sum1 = 0
-    sum2 = 0
-    count = 0
-    while count < len_face:
-        sum1 += int(ticket_list[count])        
-        count +=1     
-        sum2 += int(ticket_list[-count]) 
-    
-    return sum1 == sum2
-  
+dikt_fruts = dict()
 
-print(lucky_ticket(123006))
-print(lucky_ticket(12321))
-print(lucky_ticket(436751))
+path = os.path.join('G:\Python\Work Folder\Kirill-homework\Part_1\Lesson_4\data', 'fruits.txt')
+with open(path, encoding='utf-8') as inp_ut:
+    for fruits in inp_ut.readlines():
+        if fruits == '\n':
+            continue
+        file_name = 'fruits_{}'.format(fruits[0].upper())
+        dikt_fruts[file_name] = dikt_fruts.get(file_name,'') + fruits
+
+
+for i in dikt_fruts:
+    name = '{}.txt'.format(i)
+    with open(name,'w', encoding='utf-8') as out:
+        out.write(dikt_fruts[i])
+print('Finish')
+
+
 

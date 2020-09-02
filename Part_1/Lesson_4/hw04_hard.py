@@ -86,7 +86,6 @@ else:
 
 '''
 Бывает выдает ошибку, для того чтобы сработал код, необходимо повторно его включить
-Очень больно смотреть на этот код, ещё больнее писать его
 '''
 
 # Задание-2:
@@ -96,6 +95,7 @@ else:
 # то их ЗП уменьшается пропорционально, а за заждый час переработки
 # они получают удвоенную ЗП, пропорциональную норме.
 # Кол-во часов, которые были отработаны, указаны в файле "data/hours_of"
+
 class Worker:
     def __init__(self, name, surname, money, norm_hour, real_hour, rang):
         self.name = name
@@ -169,16 +169,21 @@ if __name__ == "__main__":
 # Подсказка:
 # Чтобы получить список больших букв русского алфавита:
 # print(list(map(chr, range(ord('А'), ord('Я')+1))))
-
+import os
 
 dikt_fruts = dict()
-with open('Part_1\Lesson_4\data\fruits.txt',encoding='utf-8') as inp_ut:
+
+path = os.path.join(os.getcwd(), 'Part_1', 'Lesson_4', 'data', 'fruits.txt')
+with open(path, encoding='utf-8') as inp_ut:
     for fruits in inp_ut.readlines():
+        if fruits == '\n':
+            continue
         file_name = 'fruits_{}'.format(fruits[0].upper())
-        dikt_fruts[file_name] = dikt_fruts.get(file_name,'')+fruits
-    
+        dikt_fruts[file_name] = dikt_fruts.get(file_name,'') + fruits
+
+
 for i in dikt_fruts:
     name = '{}.txt'.format(i)
-    with open(name,'w') as out:
+    with open(name,'w', encoding='utf-8') as out:
         out.write(dikt_fruts[i])
-print('Формирование файлов по именам фруктов закончено!')
+print('Finish')
