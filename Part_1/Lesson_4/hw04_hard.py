@@ -109,8 +109,8 @@ class Worker:
 
     @staticmethod
     def read_file():
-        path1 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'workers')
-        path2 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'hours_of')
+        path1 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_4', 'data', 'workers')
+        path2 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_4', 'data', 'hours_of')
 
         with open(path1, 'r+', encoding='utf-8') as file:
             list_norm = file.read().split('\n')
@@ -144,13 +144,13 @@ class Worker:
 
     @property
     def write_file(self):
-        with open('data_worker_of_price.txt', 'a+', encoding='utf-8') as out:
+        with open('data_worker_of_price1.txt', 'a+', encoding='utf-8') as out:
             out.write('{}{}{}{}\n'.format(self.name.ljust(15), self.surname.ljust(15),\
                                          self.rang.ljust(20), self.result_money))
 
     @staticmethod
     def title():
-        with open('data_worker_of_price.txt', 'a+', encoding='utf-8') as out:                
+        with open('data_worker_of_price1.txt', 'a+', encoding='utf-8') as out:                
             out.write('{}{}{}{}\n'.format('Имя'.ljust(15), 'Фамилия'.ljust(15),\
                                         'Должность'.ljust(20), 'Зарплата к выдаче'))
 
@@ -158,9 +158,6 @@ class Worker:
 
 if __name__ == "__main__":
     worker1 = Worker.info_to_worker()
-
-
-
 
 
 
