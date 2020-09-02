@@ -95,6 +95,8 @@ else:
 # то их ЗП уменьшается пропорционально, а за заждый час переработки
 # они получают удвоенную ЗП, пропорциональную норме.
 # Кол-во часов, которые были отработаны, указаны в файле "data/hours_of"
+import os
+
 
 class Worker:
     def __init__(self, name, surname, money, norm_hour, real_hour, rang):
@@ -107,10 +109,13 @@ class Worker:
 
     @staticmethod
     def read_file():
-        with open('Part_1\Lesson_7\data\data\workers', 'r+', encoding='utf-8') as file:
+        path1 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'workers')
+        path2 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'hours_of')
+
+        with open(path1, 'r+', encoding='utf-8') as file:
             list_norm = file.read().split('\n')
 
-        with open('Part_1\Lesson_7\data\data\hours_of', 'r+', encoding='utf-8') as file1:
+        with open(path2, 'r+', encoding='utf-8') as file1:
             list_real = file1.read().split('\n')
         return list_norm, list_real
 
@@ -153,6 +158,8 @@ class Worker:
 
 if __name__ == "__main__":
     worker1 = Worker.info_to_worker()
+
+
 
 
 

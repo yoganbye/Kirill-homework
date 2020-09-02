@@ -15,6 +15,8 @@
 # Можно это сделать без использования классов, просто посчитать и записать в файл. 
 # Можно сделать это с классами. Класс работник, будет содержать фио, норму часов, зп. 
 # И метод который считает зп используя эти атрибуты и количество фактически отработанных часов.
+import os
+
 
 class Worker:
     def __init__(self, name, surname, money, norm_hour, real_hour, rang):
@@ -27,10 +29,13 @@ class Worker:
 
     @staticmethod
     def read_file():
-        with open('Part_1\Lesson_7\data\data\workers', 'r+', encoding='utf-8') as file:
+        path1 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'workers')
+        path2 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'hours_of')
+
+        with open(path1, 'r+', encoding='utf-8') as file:
             list_norm = file.read().split('\n')
 
-        with open('Part_1\Lesson_7\data\data\hours_of', 'r+', encoding='utf-8') as file1:
+        with open(path2, 'r+', encoding='utf-8') as file1:
             list_real = file1.read().split('\n')
         return list_norm, list_real
 
