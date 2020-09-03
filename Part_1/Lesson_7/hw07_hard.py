@@ -28,30 +28,20 @@ class Worker:
         self.rang = rang
 
     @staticmethod
-    def read_file():
-        path1 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'workers')
+    def read_real_hour(surname):
         path2 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'hours_of')
-
-        with open(path1, 'r+', encoding='utf-8') as file:
-            list_norm = file.read().split('\n')
-
         with open(path2, 'r+', encoding='utf-8') as file1:
-            list_real = file1.read().split('\n')
-        return list_norm, list_real
+            for i, line in enumerate(file1):
+                if i > 0 and surname in line:
+                    return line
 
     @classmethod
-    def info_to_worker(cls):
-        list_norm, list_real = Worker.read_file()
-        Worker.title()
-        for i in list_norm[1:]:
-            name, surname, money, rang, norm_hour = i.split()
-            for j in list_real[1:]:
-                name_j, surname_j, real_hour = j.split()
-                if surname == surname_j:
-                    footman = cls(name, surname, money, norm_hour, real_hour, rang)
-                    footman.calculation
-                    footman.write_file
-        return footman   
+    def info_to_workers(cls, line):
+        name, surname, money, rang, norm_hour = line.split()
+        real_hour = Worker.read_real_hour(surname)
+        name_j, surname_j, real_hour = real_hour.split()
+        footman = cls(name, surname, money, norm_hour, real_hour, rang)   
+        return footman 
 
     @property
     def calculation(self):
@@ -75,7 +65,12 @@ class Worker:
                                         'Должность'.ljust(20), 'Зарплата к выдаче'))
 
 
-
 if __name__ == "__main__":
-    worker1 = Worker.info_to_worker()
-
+    path1 = os.path.join(os.getcwd(), 'Part_1', 'Lesson_7', 'data\data', 'workers')
+    Worker.title()
+    with open(path1, 'r+', encoding='utf-8') as file:
+        for i, line in enumerate(file):
+            if i > 0:
+                worker1 = Worker.info_to_workers(line)
+                worker1.calculation
+                worker1.write_file
