@@ -4,23 +4,35 @@ from django.utils import timezone
 
 
 class Profile(models.Model):
-    pass
-
-
-class Ad(models.Model):
-    pass
+    """
+    Модель профиля
+    """
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='user_profile'
+    )
+    birth_date = models.DateField('Date of birth', null=True, blank=True)
+    avatar = models.ImageField(upload_to='/avatar', default=None)
+    friends = models.ManyToManyField(User, related_name='friends', blank=True)
 
 
 class CategoriesAd(models.Model):
-    pass
+    '''
+    Модель категорий объявлений
+    '''
+    name = models.CharField(max_length=30)
+   
 
-# 1. Реализовать модели, необходимые для реализации доски объявлений (подобной Avito).
-#  Предлагаемая структура: У каждого “Пользователя” (у него есть 
-# фото профиля и 
-# дата рождения, помимо стандартной реализации) есть множество 
-# “Объявлений” (Например:  “Продам гараж и.т.п.”, 
-# обязательно есть заголовок, 
-# описание и 
-# фото), 
-# которые 
-#  разбиты по “Категориям” (Например: “Транспорт, недвижимость и.т.д.”)
+
+class Ad(models.Model):
+    """
+    Модель объявлений
+    """
+    heading = models.CharField(max_length=30)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    categories = models.ForeignKey(CategoriesAd, on_delete=models.CASCADE)
+    description = models.TextField(max_length=1000, blank=True)
+    image = models.ImageField(upload_to='/image')
+    date_pub = models.DateTimeField(default=timezone.now)
+    date_edit = models.DateTimeField(default=timezone.now)
+
+
