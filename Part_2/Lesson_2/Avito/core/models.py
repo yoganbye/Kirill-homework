@@ -12,7 +12,7 @@ def ad_path(instance, filename):
     
 class Profile(models.Model): 
     """
-    Модель профиля
+    Модель профиля юзера
     """
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='user_profile'
@@ -45,7 +45,7 @@ class Ad(models.Model):
     description = models.TextField(max_length=1000, blank=True)
     image = models.ImageField(upload_to=ad_path, default=None)
     date_pub = models.DateTimeField(default=timezone.now)
-    date_edit = models.DateTimeField(default=timezone.now)
+    date_edit = models.DateTimeField(default=timezone.now())
 
     def __str__(self):
         return 'Author {}, date {}'.format(self.author.username, self.date_pub) 
