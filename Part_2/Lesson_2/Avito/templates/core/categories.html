@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Категории объявлений</title>
+</head>
+<body>
+    <p>Категории объявлений</p>
+    <p>
+        {% if categories %}
+            <ul>
+                {% for cat in categories %}
+                    <li>
+                        <p>
+                            <a href="{%url 'det_categories' cat.id %}">
+                                {{ cat }}
+                            </a>
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </p>
+    
+</body>
+</html>

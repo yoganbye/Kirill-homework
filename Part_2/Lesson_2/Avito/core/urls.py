@@ -11,4 +11,5 @@ urlpatterns = [
     path('announcement/<int:announce_id>/edit/', views.ad_edit, name='ad_edit'),
     path('announcement/<int:announce_id>/delete/', views.ad_delete, name='ad_delete'),
     path('categories/', views.categories, name='categories'),
+    path('categories/<int:categories_id>/', views.det_categories, name='det_categories'),
 ]

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from time import strftime
 
 
 def avatar_path(instance, filename):
@@ -43,11 +44,12 @@ class Ad(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     categories = models.ForeignKey(CategoriesAd, on_delete=models.CASCADE)
     description = models.TextField(max_length=1000, blank=True)
+    price = models.TextField(max_length=20, blank=True)
     image = models.ImageField(upload_to=ad_path, default=None)
     date_pub = models.DateTimeField(default=timezone.now)
     date_edit = models.DateTimeField(default=timezone.now())
 
     def __str__(self):
-        return 'Author {}, date {}'.format(self.author.username, self.date_pub) 
+        return '{}, price {}$'.format(self.heading, self.price)#, self.date_pub.strftime("%m/%d/%Y %H:%M:%S")
 
 
