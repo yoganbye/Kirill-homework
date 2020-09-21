@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.template import loader
+from .forms import AdForm
 
 from .models import Profile, CategoriesAd, Ad
 
@@ -70,12 +71,12 @@ def ad_edit(request, announce_id):
     return HttpResponse(response)
 
 
-def ad_create(request, announce_id):
+def ad_create(request):
     '''
     Вьюха создания объявления
     '''
-    response = 'Создание объявления №{}'.format(announce_id)
-    return HttpResponse(response)
+    form = AdForm()
+    return render(request, 'core/ad_create.html', {'form' : form})
 
 
 def ad_delete(request, announce_id):
