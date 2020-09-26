@@ -23,6 +23,8 @@ def det_announce(request, announce_id):
     '''
     try:
         announce = Ad.objects.get(id=announce_id)  
+        announce.views_count += 1
+        announce.save()
     except Ad.DoesNotExist:
         raise Http404("Post does not exist")
     context = {
@@ -76,7 +78,24 @@ def ad_create(request):
     Вьюха создания объявления
     '''
     form = AdForm()
-    return render(request, 'core/ad_create.html', {'form' : form})
+    template_name = 'core/ad_create.html'
+    context = {'form' : form}
+
+    if request.method == "GET":
+        return render(request, template_name, context)
+    elif request.method == "POST":
+        form = AdForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            ad = form.save(commit=False)
+            ad.author = request.user
+            ad.save()
+            context['ad_was_created'] = True
+            return render(request, template_name, context)
+        else:
+            context['ad_was_created'] = False
+            context['form'] = form
+            return render(request, template_name, context)
 
 
 def ad_delete(request, announce_id):

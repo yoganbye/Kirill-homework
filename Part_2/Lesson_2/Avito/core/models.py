@@ -48,6 +48,7 @@ class Ad(models.Model):
     image = models.ImageField(upload_to=ad_path, default=None)
     date_pub = models.DateTimeField(default=timezone.now)
     date_edit = models.DateTimeField(default=timezone.now())
+    views_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return '{}, price {}$'.format(self.heading, self.price)#, self.date_pub.strftime("%m/%d/%Y %H:%M:%S")
