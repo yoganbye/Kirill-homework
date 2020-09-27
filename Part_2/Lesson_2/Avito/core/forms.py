@@ -43,10 +43,12 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['text']
+        labels = {
+            'text' : 'Оставьте комментарий'
+        }
 
         widget = {
             'text' : forms.Textarea(attrs={
-                'class': 'form-control', 
-                'placeholder': ' Текст комментария'
-                })
+                'class': 'form-control', 'placeholder': ' Текст комментария'
+            }),
         }

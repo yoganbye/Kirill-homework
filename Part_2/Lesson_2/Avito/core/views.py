@@ -80,25 +80,6 @@ class EditeAdView(UpdateView):
         return reverse('det_announce', args=(announce_id, ))
 
 
-# class AnnounceView(View):
-#     '''
-#     Вьюха детального представления объявления
-#     '''
-#     template_name = 'core/det_announce.html'
-
-#     def get(self, request, announce_id, *args, **kwargs):
-#         try:
-#             announce = Ad.objects.get(id=announce_id)  
-#             announce.views_count += 1
-#             announce.save()
-#         except Ad.DoesNotExist:
-#             raise Http404("Post does not exist")
-#         context = {
-#             'announce' : announce
-#         }
-#         return render(request, self.template_name, context)
-
-
 class AnnounceView(DetailView):
     '''
     Вьюха детального представления объявления
@@ -111,6 +92,10 @@ class AnnounceView(DetailView):
     def get(self, request, announce_id, *args, **kwargs):
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
+
+        self.object.views_count += 1
+        self.object.save()
+
         context['comments'] = Comment.objects.filter(
             in_announce_id=announce_id
         ).order_by('-date_publish')
