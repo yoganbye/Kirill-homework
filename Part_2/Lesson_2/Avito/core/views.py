@@ -1,12 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.template import loader
-from .forms import AdForm, CommentForm
+from .forms import AdForm, CommentForm, LoginForm, SignUpForm
 from django.views.generic import ListView, View, CreateView, DeleteView, UpdateView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
 from .exceptions import PermissionDenied
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import authenticate, login, logout
 from .models import Profile, CategoriesAd, Ad, Comment
 
 
@@ -20,6 +22,13 @@ class IndexView(ListView):
 
     def get_queryset(self):
         return Ad.objects.all().order_by('-date_pub')[:7]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'title': 'Главная страница',
+        })
+        return context
 
 
 class CreateAdView(CreateView):
@@ -100,6 +109,7 @@ class AnnounceView(DetailView):
             in_announce_id=announce_id
         ).order_by('-date_publish')
         context['comment_form'] = None
+        context['title'] = self.object.heading
         if request.user.is_authenticated:
             context['comment_form'] = self.comment_form
         return self.render_to_response(context)
@@ -133,6 +143,7 @@ def announce(request):
     announce_queryset = Ad.objects.all().order_by('-date_pub')
     context = {
         'posts' : announce_queryset,
+        'title': 'Все объявления'
     }
     return render(request, 'core/announce.html', context)
 
@@ -143,7 +154,8 @@ def categories(request):
     '''
     categories_queryset = CategoriesAd.objects.all()
     context = {
-        'categories' : categories_queryset
+        'categories' : categories_queryset,
+        'title': 'Категории'
     }
     return render(request, 'core/categories.html', context)
 
@@ -157,7 +169,66 @@ def det_categories(request, categories_id):
     context = {
         'det_categories' : det_categories_queryset,
         'cat' : cat,
+        'title': f'Объявления из категории {cat}',
+        
     }
     return render(request, 'core/det_categories.html', context)
 
 
+class LoginView(LoginView):
+    template_name = 'my_auth/login.html'
+    form_class = LoginForm
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password = password)
+
+            if user is not None:
+                login(request, user)
+                return redirect(reverse('index'), request)
+            else:
+                context = {
+                    'form': form
+                }
+                return render(request, self.template_name, context)
+        else:
+            context = {
+                'forms': form
+            }
+            return render(request, self.template_name, context)
+
+
+class SignupView(View):
+    template_name = 'my_auth/signup.html'
+    registration_form = SignUpForm
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            'form': self.registration_form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        user_form = self.registration_form(data=request.POST)
+        registered = False
+        if user_form.is_valid():
+            user = user_form.save(commit=False)
+            user.email = user_form.cleaned_data['email']
+            user.save()
+            registered = True
+            return render(
+                request, self.template_name, {'registered' : registered})
+        else:
+            return render(
+                request, self.template_name, {
+                    'form': user_form,'registered' : registered
+                }
+            )
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('index'))

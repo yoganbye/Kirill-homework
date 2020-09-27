@@ -1,29 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Главная страница</title>
-</head>
-<body>
-    <p>Avito</p>
-    <p>Размещайте объявления и совершайте покупки на Авито! Удобно. Быстро. Безопасно. Выгодно.</p>
-    <p>Для просмотра категорий объявлений перейдите по 
-        <a href="{%url 'categories' %}">
-            ссылке
-        </a>
+{% extends 'core/layout.html' %}
 
-    </p>
-    <p>Для просмотра всех объявлений перейдите по 
-        <a href="{%url 'announce' %}">
-            ссылке
-        </a>
-
-    <p>
-    <a href="{%url 'ad_create' %}">
-        <button type='submit'>Создать объявление</button>
-    </a>
-    </p>
-
+{% block unique_content %}
+    <p><h2>Главная страница</h2></p>
     </p>
     {% if posts %}
         <ul>
@@ -42,5 +20,5 @@
             {% endfor %}
         </ul> 
     {% endif %}
-</body>
-</html>
+
+{% endblock unique_content %}

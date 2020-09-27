@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Категории объявлений</title>
-</head>
-<body>
-    <p>Категории объявлений</p>
+{% extends 'core/layout.html' %}
+
+{% block unique_content %}
+
+    <p><h2>Категории объявлений</h2></p>
     <p>
         {% if categories %}
             <ul>
@@ -22,5 +19,4 @@
         {% endif %}
     </p>
     
-</body>
-</html>
+{% endblock unique_content %}

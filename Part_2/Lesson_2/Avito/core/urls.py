@@ -2,6 +2,10 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from django.views.generic import TemplateView
+from django.contrib.auth.views import (
+    PasswordResetView, PasswordResetDoneView, 
+    PasswordResetConfirmView, PasswordResetCompleteView
+)
 
 
 urlpatterns = [
@@ -20,4 +24,13 @@ urlpatterns = [
     path('categories/', views.categories, name='categories'),
 
     path('categories/<int:categories_id>/', views.det_categories, name='det_categories'),
+
+    path('login/', views.LoginView.as_view(), name='login'),
+
+    path('registration/', views.SignupView.as_view(), name='signup'),
+
+    path('logout/', views.logout_view, name='logout'),
+
+
+
 ]

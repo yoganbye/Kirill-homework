@@ -1,0 +1,37 @@
+<header>
+    <p> 
+        <h1>Avito</h1>
+        Размещайте объявления и совершайте покупки на Авито! Удобно. Быстро. Безопасно. Выгодно.
+    </p>
+    <hr>
+    <p>
+        <a href="{%url 'index' %}"> Главная страница </a>       
+    </p>
+
+    <p>
+        <a href="{%url 'categories' %}"> Просмотр категорий объявлений </a>
+    </p>
+
+    <p>
+        <a href="{%url 'announce' %}"> Просмотр всех объявлений </a>
+    <p>
+        <a href="{%url 'ad_create' %}">
+            <button type='submit'>Создать объявление</button>
+        </a>
+    </p>
+
+    <hr>
+
+    {% if user.is_authenticated %}
+        <form action='{% url "logout" %}' method="GET">
+            <button type="submit"> Logout </button>
+        </form>
+    {% else %}
+        <form action='{% url "login" %}' method="GET">
+            <button type="submit"> Login </button>
+        </form>
+    {% endif %}
+
+    <hr>
+
+</header>
