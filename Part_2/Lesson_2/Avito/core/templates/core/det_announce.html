@@ -14,16 +14,32 @@
     <p>Цена: {{ ad.price }} $</p>
     <p>Описание: {{ ad.description }}</p>
     <p>Количество просмотров: {{ ad.views_count }}</p>
-    <hr>
-    <p>Комментарии:</p>
 
+    {% if ad.author == user %}
+        <p>
+            <a href="{% url 'ad_edit' ad.id %}">
+                <button type='submit'>Редактировать объявление</button>
+            </a>
+        </p>
+        <p>
+            <a href="{% url 'ad_delete' ad.id %}">
+                <button type='submit'>Удалить объявление</button>
+            </a>
+        </p>
+    {% endif %}
+
+    <hr>
+
+    <p>Комментарии:</p>
     {% for comment in comments %}
         <p>{{ comment }}</p>
     {% endfor %}
-
-    <form method='post' enctype='multipart/form-data'>
-        {% csrf_token %}
-        <button type='submit'>Комментарий</button>
-    </form>    
+    <p>
+        <form method='POST' enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type='submit'>Комментарий</button>
+        </form> 
+    </p>   
 </body>
 </html>

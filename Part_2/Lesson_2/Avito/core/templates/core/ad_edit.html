@@ -1,0 +1,12 @@
+{% if ad.author != user %}
+    <h2> Редактировать объявление может только его автор</h2>
+{% else %}
+    <form method='POST', enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit"> Принять изменения </button>
+    </form>
+    <a href="{% url 'ad_delete' ad.id}"> 
+        <button type="submit"> Удалить пост</button>    
+    </a>
+{% endif %}

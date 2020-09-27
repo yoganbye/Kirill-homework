@@ -57,7 +57,7 @@ class DeleteAdView(DeleteView):
 
     def get_success_url(self):
         announce_id = self.kwargs['announce_id']
-        return reverse('delete_ad_success', args=(announce_id, ))
+        return reverse('index')
 
 
 class EditeAdView(UpdateView):
