@@ -1,13 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import loader
-from .forms import AdForm
-from django.views.generic import ListView, View, CreateView, DeleteView, UpdateView
+from .forms import AdForm, CommentForm
+from django.views.generic import ListView, View, CreateView, DeleteView, UpdateView, DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.urls import reverse
 from .exceptions import PermissionDenied
-from .models import Profile, CategoriesAd, Ad
+from .models import Profile, CategoriesAd, Ad, Comment
 
 
 class IndexView(ListView):
@@ -99,6 +99,48 @@ class AnnounceView(View):
         return render(request, self.template_name, context)
 
 
+# class AnnounceView(DetailView):
+#     '''
+#     Вьюха детального представления объявления
+#     '''
+#     model = Ad
+#     comment_form = CommentForm
+#     pk_url_kwarg = 'announce_id'
+#     template_name = 'core/det_announce.html'
+
+#     def get(self, request, announce_id, *args, **kwargs):
+#         self.object = self.get_object()
+#         context = self.get_context_data(object=self.object)
+#         context['comments'] = Comment.objects.filter(
+#             in_announce_id=announce_id
+#         ).order_by('-date_publish')
+#         context['comment_form'] = None
+#         if request.user.is_authenticated:
+#             context['comment_form'] = self.comment_form
+#         return self.render_to_response(context)
+
+#     @method_decorator(login_required)
+#     def post(self, request, announce_id, *args, **kwargs):
+#         announce = get_object_or_404(Ad, id=announce_id)
+#         form = self.comment_form(request.POST)
+#         if form.is_valid():
+#             comment = form.save()
+#             comment.author = request.user_profile
+#             comment.in_announce = announce
+#             comment.save()
+#             return render(request, self.template_name, context={
+#                 'comment_form': self.comment_form,
+#                 'announce': announce,
+#                 'comments': announce.comment_set.order_by('-date_publish')
+#             })
+#         else:
+#             return render(request, self.template_name, context={
+#                 'comment_form': form,
+#                 'announce': announce,
+#                 'comments': announce.comment_set.order_by('-date_publish')
+#             })
+
+
 def announce(request):
     '''
     Вьюха страницы со всеми объявлениями
@@ -132,57 +174,5 @@ def det_categories(request, categories_id):
         'cat' : cat,
     }
     return render(request, 'core/det_categories.html', context)
-
-
-# def index(request):
-#     '''
-#     Вьюха главной страницы
-#     '''
-#     announce_queryset = Ad.objects.all().order_by('-date_pub')[:7]
-#     context = {
-#         'posts' : announce_queryset,
-#     }
-#     return render(request, 'core/index.html', context)
-
-
-# def ad_create(request):
-#     '''
-#     Вьюха создания объявления
-#     '''
-#     form = AdForm()
-#     template_name = 'core/ad_create.html'
-#     context = {'form' : form}
-
-#     if request.method == "GET":
-#         return render(request, template_name, context)
-#     elif request.method == "POST":
-#         form = AdForm(request.POST, request.FILES)
-
-#         if form.is_valid():
-#             ad = form.save(commit=False)
-#             ad.author = request.user
-#             ad.save()
-#             context['ad_was_created'] = True
-#             return render(request, template_name, context)
-#         else:
-#             context['ad_was_created'] = False
-#             context['form'] = form
-#             return render(request, template_name, context)
-
-
-# def det_announce(request, announce_id):
-#     '''
-#     Вьюха детального представления объявления
-#     '''
-#     try:
-#         announce = Ad.objects.get(id=announce_id)  
-#         announce.views_count += 1
-#         announce.save()
-#     except Ad.DoesNotExist:
-#         raise Http404("Post does not exist")
-#     context = {
-#         'announce' : announce
-#     }
-#     return render(request, 'core/det_announce.html', context)
 
 

@@ -54,3 +54,13 @@ class Ad(models.Model):
         return '{}, price {}$'.format(self.heading, self.price)#, self.date_pub.strftime("%m/%d/%Y %H:%M:%S")
 
 
+class Comment(models.Model):  
+    author = models.ForeignKey(User, on_delete=models.CASCADE)       
+    text = models.TextField(max_length=700)
+    in_announce = models.ForeignKey(Ad, on_delete=models.CASCADE)
+    date_publish = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return 'Author {}: {}'.format(self.author.username, self.text[:10] + "...")                                     
+
+

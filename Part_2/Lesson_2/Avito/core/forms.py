@@ -1,5 +1,5 @@
 from django import forms
-from core.models import Ad, CategoriesAd
+from core.models import Ad, CategoriesAd, Comment
 
 from django.core.exceptions import ValidationError
 
@@ -35,4 +35,18 @@ class AdForm(forms.ModelForm):
             'image' : forms.ClearableFileInput(attrs={
                 'type' : 'file', 'class' : 'form-control-file'
             }),
+        }
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['text']
+
+        widget = {
+            'text' : forms.Textarea(attrs={
+                'class': 'form-control', 
+                'placeholder': ' Текст комментария'
+                })
         }
