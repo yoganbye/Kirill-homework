@@ -80,65 +80,65 @@ class EditeAdView(UpdateView):
         return reverse('det_announce', args=(announce_id, ))
 
 
-class AnnounceView(View):
-    '''
-    Вьюха детального представления объявления
-    '''
-    template_name = 'core/det_announce.html'
-
-    def get(self, request, announce_id, *args, **kwargs):
-        try:
-            announce = Ad.objects.get(id=announce_id)  
-            announce.views_count += 1
-            announce.save()
-        except Ad.DoesNotExist:
-            raise Http404("Post does not exist")
-        context = {
-            'announce' : announce
-        }
-        return render(request, self.template_name, context)
-
-
-# class AnnounceView(DetailView):
+# class AnnounceView(View):
 #     '''
 #     Вьюха детального представления объявления
 #     '''
-#     model = Ad
-#     comment_form = CommentForm
-#     pk_url_kwarg = 'announce_id'
 #     template_name = 'core/det_announce.html'
 
 #     def get(self, request, announce_id, *args, **kwargs):
-#         self.object = self.get_object()
-#         context = self.get_context_data(object=self.object)
-#         context['comments'] = Comment.objects.filter(
-#             in_announce_id=announce_id
-#         ).order_by('-date_publish')
-#         context['comment_form'] = None
-#         if request.user.is_authenticated:
-#             context['comment_form'] = self.comment_form
-#         return self.render_to_response(context)
+#         try:
+#             announce = Ad.objects.get(id=announce_id)  
+#             announce.views_count += 1
+#             announce.save()
+#         except Ad.DoesNotExist:
+#             raise Http404("Post does not exist")
+#         context = {
+#             'announce' : announce
+#         }
+#         return render(request, self.template_name, context)
 
-#     @method_decorator(login_required)
-#     def post(self, request, announce_id, *args, **kwargs):
-#         announce = get_object_or_404(Ad, id=announce_id)
-#         form = self.comment_form(request.POST)
-#         if form.is_valid():
-#             comment = form.save()
-#             comment.author = request.user_profile
-#             comment.in_announce = announce
-#             comment.save()
-#             return render(request, self.template_name, context={
-#                 'comment_form': self.comment_form,
-#                 'announce': announce,
-#                 'comments': announce.comment_set.order_by('-date_publish')
-#             })
-#         else:
-#             return render(request, self.template_name, context={
-#                 'comment_form': form,
-#                 'announce': announce,
-#                 'comments': announce.comment_set.order_by('-date_publish')
-#             })
+
+class AnnounceView(DetailView):
+    '''
+    Вьюха детального представления объявления
+    '''
+    model = Ad
+    comment_form = CommentForm
+    pk_url_kwarg = 'announce_id'
+    template_name = 'core/det_announce.html'
+
+    def get(self, request, announce_id, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        context['comments'] = Comment.objects.filter(
+            in_announce_id=announce_id
+        ).order_by('-date_publish')
+        context['comment_form'] = None
+        if request.user.is_authenticated:
+            context['comment_form'] = self.comment_form
+        return self.render_to_response(context)
+
+    @method_decorator(login_required)
+    def post(self, request, announce_id, *args, **kwargs):
+        announce = get_object_or_404(Ad, id=announce_id)
+        form = self.comment_form(request.POST)
+        if form.is_valid():
+            comment = form.save()
+            comment.author = request.user_profile
+            comment.in_announce = announce
+            comment.save()
+            return render(request, self.template_name, context={
+                'comment_form': self.comment_form,
+                'announce': announce,
+                'comments': announce.comment_set.order_by('-date_publish')
+            })
+        else:
+            return render(request, self.template_name, context={
+                'comment_form': form,
+                'announce': announce,
+                'comments': announce.comment_set.order_by('-date_publish')
+            })
 
 
 def announce(request):

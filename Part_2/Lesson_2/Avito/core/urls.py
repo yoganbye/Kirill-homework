@@ -11,8 +11,6 @@ urlpatterns = [
 
     path('announcement/<int:announce_id>/', views.AnnounceView.as_view(), name='det_announce'),
 
-    # path('announcement/<int:announce_id>/', views.det_announce, name='det_announce'),
-
     path('announcement/create/', views.CreateAdView.as_view(), name='ad_create'),
 
     path('announcement/<int:announce_id>/edit/', views.EditeAdView.as_view(), name='ad_edit'),
