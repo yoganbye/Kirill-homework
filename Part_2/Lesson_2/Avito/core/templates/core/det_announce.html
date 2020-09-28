@@ -3,7 +3,7 @@
 {% block unique_content %}
 
     <p><h2>{{ ad.heading }}</h2></p>
-    <p>Автор: {{ ad.author }}</p>
+    <p>Автор: <a href="{% url 'profile' ad.author.id %}">{{ ad.author }}</a></p>
     <p>Дата публикации: {{ ad.date_pub }}</p>
     <p>
         <img alt="announce's image" src='{{ ad.image.url }}' 
@@ -25,17 +25,17 @@
             </a>
         </p>
     {% endif %}
-
     <hr>
-
     <p>Комментарии:</p>
     {% for comment in comments %}
-        <p>{{ comment }}</p>
+        <a href="{% url 'profile' comment.author.id %}"><p>{{ comment.author }}</p></a> 
+        <p>{{ comment.text }}</p>
     {% endfor %}
+    
     <p>
         <form method='POST' enctype='multipart/form-data'>
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ comment_form.as_p }}
             <button type='submit'>Комментарий</button>
         </form> 
     </p>   

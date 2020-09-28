@@ -61,6 +61,6 @@ class Comment(models.Model):
     date_publish = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return 'Author {}: {}'.format(self.author.username, self.text[:10] + "...")                                     
+        return 'Author {}: {}'.format(self.author.username, self.text[:50] + "...")                                     
 
 

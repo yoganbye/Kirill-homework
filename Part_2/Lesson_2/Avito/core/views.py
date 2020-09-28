@@ -119,8 +119,8 @@ class AnnounceView(DetailView):
         announce = get_object_or_404(Ad, id=announce_id)
         form = self.comment_form(request.POST)
         if form.is_valid():
-            comment = form.save()
-            comment.author = request.user_profile
+            comment = form.save(commit=False)
+            comment.author = request.user
             comment.in_announce = announce
             comment.save()
             return render(request, self.template_name, context={
@@ -174,61 +174,3 @@ def det_categories(request, categories_id):
     }
     return render(request, 'core/det_categories.html', context)
 
-
-class LoginView(LoginView):
-    template_name = 'my_auth/login.html'
-    form_class = LoginForm
-
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(data=request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password = password)
-
-            if user is not None:
-                login(request, user)
-                return redirect(reverse('index'), request)
-            else:
-                context = {
-                    'form': form
-                }
-                return render(request, self.template_name, context)
-        else:
-            context = {
-                'forms': form
-            }
-            return render(request, self.template_name, context)
-
-
-class SignupView(View):
-    template_name = 'my_auth/signup.html'
-    registration_form = SignUpForm
-
-    def get(self, request, *args, **kwargs):
-        context = {
-            'form': self.registration_form
-        }
-        return render(request, self.template_name, context)
-
-    def post(self, request, *args, **kwargs):
-        user_form = self.registration_form(data=request.POST)
-        registered = False
-        if user_form.is_valid():
-            user = user_form.save(commit=False)
-            user.email = user_form.cleaned_data['email']
-            user.save()
-            registered = True
-            return render(
-                request, self.template_name, {'registered' : registered})
-        else:
-            return render(
-                request, self.template_name, {
-                    'form': user_form,'registered' : registered
-                }
-            )
-
-@login_required
-def logout_view(request):
-    logout(request)
-    return redirect(reverse('index'))

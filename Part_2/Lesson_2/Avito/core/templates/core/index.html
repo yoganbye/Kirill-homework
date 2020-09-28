@@ -13,7 +13,7 @@
                             style='width: 250px; height: 250px;'>
                     </p>
                     </a>                    
-                    <p>{{ post.author }}</p>                    
+                    <a href="{% url 'profile' post.author.id %}"><p>{{ post.author }}</p></a>                
                     <p>{{ post.date_pub }}</p>
                     <p>Количество просмотров: {{ post.views_count }}</p>
                 </li>

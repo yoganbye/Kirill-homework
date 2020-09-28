@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from . import views
+from . import views, auth_views
 from django.views.generic import TemplateView
 from django.contrib.auth.views import (
     PasswordResetView, PasswordResetDoneView, 
@@ -25,11 +25,13 @@ urlpatterns = [
 
     path('categories/<int:categories_id>/', views.det_categories, name='det_categories'),
 
-    path('login/', views.LoginView.as_view(), name='login'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
 
-    path('registration/', views.SignupView.as_view(), name='signup'),
+    path('registration/', auth_views.SignupView.as_view(), name='signup'),
 
-    path('logout/', views.logout_view, name='logout'),
+    path('logout/', auth_views.logout_view, name='logout'),
+
+    path('profile/<int:user_id>', auth_views.ProfileView.as_view(), name='profile'),
 
 
 
