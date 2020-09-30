@@ -28,7 +28,7 @@
     <hr>
     <p>Комментарии:</p>
     {% for comment in comments %}
-        <a href="{% url 'profile' comment.author.id %}"><p>{{ comment.author }}</p></a> 
+        <p><a href="{% url 'profile' comment.author.id %}">{{ comment.author }}</a></p>
         <p>{{ comment.text }}</p>
     {% endfor %}
     

@@ -72,4 +72,4 @@ class ProfileView(DetailView):
     template_name = 'my_auth/profile.html'
 
     def get_object(self):
-        return get_object_or_404(Profile, user_id=self.kwargs['user_id'])
+        return get_object_or_404(Profile, user__id=self.kwargs['user_id'])

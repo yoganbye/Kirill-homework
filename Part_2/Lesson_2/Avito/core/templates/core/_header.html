@@ -23,6 +23,7 @@
     <hr>
 
     {% if user.is_authenticated %}
+        <p><a href="{% url 'profile' user.id %}">Мой профиль</a></p>
         <form action='{% url "logout" %}' method="GET">
             <button type="submit"> Logout </button>
         </form>

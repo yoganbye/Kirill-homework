@@ -106,7 +106,7 @@ class AnnounceView(DetailView):
         self.object.save()
 
         context['comments'] = Comment.objects.filter(
-            in_announce_id=announce_id
+            in_announce__id=announce_id
         ).order_by('-date_publish')
         context['comment_form'] = None
         context['title'] = self.object.heading
