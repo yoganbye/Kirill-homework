@@ -105,11 +105,16 @@ class AnnounceView(DetailView):
         self.object.views_count += 1
         self.object.save()
 
-        context['comments'] = Comment.objects.filter(
+        comments = Comment.objects.filter(
             in_announce__id=announce_id
-        ).order_by('-date_publish')
-        context['comment_form'] = None
-        context['title'] = self.object.heading
+            ).order_by('-date_publish')       
+
+        context.update({
+            'comments': comments,
+            'comment_form': None,
+            'title': self.object.heading,
+            })
+
         if request.user.is_authenticated:
             context['comment_form'] = self.comment_form
         return self.render_to_response(context)
@@ -125,13 +130,13 @@ class AnnounceView(DetailView):
             comment.save()
             return render(request, self.template_name, context={
                 'comment_form': self.comment_form,
-                'announce': announce,
+                'ad': announce,
                 'comments': announce.comment_set.order_by('-date_publish')
             })
         else:
             return render(request, self.template_name, context={
                 'comment_form': form,
-                'announce': announce,
+                'ad': announce,
                 'comments': announce.comment_set.order_by('-date_publish')
             })
 
