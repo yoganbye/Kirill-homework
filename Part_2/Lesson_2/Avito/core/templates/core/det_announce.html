@@ -32,12 +32,14 @@
         <p>{{ comment.text }}</p>
     {% endfor %}
     
-    <p>
-        <form method='POST' enctype='multipart/form-data'>
-            {% csrf_token %}
-            {{ comment_form.as_p }}
-            <button type='submit'>Комментарий</button>
-        </form> 
-    </p>   
+    {% if ad.author == user %}
+        <p>
+            <form method='POST' enctype='multipart/form-data'>
+                {% csrf_token %}
+                {{ comment_form.as_p }}
+                <button type='submit'>Комментарий</button>
+            </form> 
+        </p>   
+    {% endif %}
 
 {% endblock unique_content %}
