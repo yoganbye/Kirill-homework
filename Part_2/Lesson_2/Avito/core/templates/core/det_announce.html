@@ -32,7 +32,7 @@
         <p>{{ comment.text }}</p>
     {% endfor %}
     
-    {% if ad.author == user %}
+    {% if user.is_authenticated %}
         <p>
             <form method='POST' enctype='multipart/form-data'>
                 {% csrf_token %}
